@@ -100,6 +100,7 @@ void loop(){
   Serial.print(" | GyZ = "); Serial.println(GyZ);
   */
 
+  if (gps.hdop.isValid() && gps.hdop.value() > 500) qualidade = 0;
 
   if(qualidade > 0 && gps.location.isValid() && gps.hdop.isValid() && gps.hdop.value() <= 500) {
     
