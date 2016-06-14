@@ -16,7 +16,7 @@
 					não mais guardando todas as leituras dos sensores.
 */
 
-DROP SCHEMA `qualismap`;
+//DROP SCHEMA `qualismap`;
 
 CREATE SCHEMA `qualismap` ;
 
