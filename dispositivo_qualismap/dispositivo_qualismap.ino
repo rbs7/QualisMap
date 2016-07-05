@@ -80,10 +80,10 @@ void loop(){
   if (GyXY > 3500) {
     qualidade = max(qualidade,1);
   }
-  if (GyXY > 5500) {
+  if (GyXY > 6000) {
     qualidade = max(qualidade,2);
   }
-  if (GyXY > 7500) {
+  if (GyXY > 8000) {
     qualidade = max(qualidade,3);
   }
 
