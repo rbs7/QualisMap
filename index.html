@@ -1,27 +1,43 @@
-<html>
-<!--
----- QUALISMAP - Engenharia de Software e Sistemas
----- IF682 - Engenharia de Software e Sistemas
----- Equipe: João Vicente, Rebeca Paula, Renata Caroline, Rogério Santos.
----- Versão: 1.0
----- Descrição: Site acessado pelo usuario.
--->
-	<head>
-		<title>:: QualisMap ::</title>
-		
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-		<script type="text/javascript" src="js/map.js"></script>
-		<script type="text/javascript" src="js/dados.js"></script>
-		
-	
-		<input id="address" type="textbox" value="">
-		<input id="buscar" type="button" value="Buscar" onclick="js/busca.js">
-	
-	</head>
-	
-	<body>
-		<div id="map-canvas"/>
-	</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>::QualisMap</title>
+
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:600" type="text/css" rel="stylesheet" />
+        <link href="estilo.css" type="text/css" rel="stylesheet" />
+
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="map_final.js"></script>
+        <script type="text/javascript" src="jquery-ui.custom.min.js"></script>
+
+    </head>
+    
+    <body>
+
+        <div id="apresentacao">
+
+            <h1>QUALISMAP</h1>
+    
+            <form method="post" action="index.html">    
+                <fieldset> 
+            
+                    <div class="campos">
+                        <label for="txtEndereco">Endereço:</label>
+                        <input type="text" id="txtEndereco" name="txtEndereco" />
+                        <input type="button" id="btnEndereco" name="btnEndereco" value="Mostrar no mapa" />
+                    </div>
+
+                    <div id="map-canvas"></div>
+                    
+                	<input type="submit" value="Informação" name="btnInformação" />
+                    
+                    <input type="hidden" id="txtLatitude" name="txtLatitude" />
+                    <input type="hidden" id="txtLongitude" name="txtLongitude" />
+
+                </fieldset>
+            </form>
+		</div>
+    </body>
 </html>
