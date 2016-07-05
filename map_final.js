@@ -14,12 +14,14 @@ function reqListener () {
 var oReq = new XMLHttpRequest();
 
 oReq.onload = function() {	
-	var r = this.responseText;
+	var r = this.responseText; //"0.01;0;RE;";
+	r = r.substring(1, r.length-1);
 	
 	var latitude;
 	var longitude;
 	var classificacao;
-	var i, j;
+	var i, j, cont = 0;
+	
 	for (j = 0; j < r.length; j++ )
 	{
 		latitude = "";
@@ -52,16 +54,66 @@ oReq.onload = function() {
 			}
 		}
 		j = i;
-		
-		markersData[markersData.length] = {lat: parseFloat(latitude), lng: parseFloat(longitude), clf: classficacao};
+		markersData[markersData.length] = {lat: parseFloat(latitude), lng: parseFloat(longitude), clf: classificacao};
 	}
+	
+	initialize()
 };
 
 oReq.open("get", "php/locais.php", true);
 
 oReq.send();
 
+//Construção dos marcadores
 
+// Esta funcao vai percorrer a informacao contida na variavel markersData e cria os marcadores atraves da funcao createMarker
+function displayMarkers(){	
+   // esta variavel vai definir a area de mapa a abranger e o nivel do zoom de acordo com as posicoes dos marcadores
+   var bounds = new google.maps.LatLngBounds();
+   // Loop que vai estruturar a informacao contida em markersData para que a funcao createMarker possa criar os marcadores 
+   for (var i = 1; i < markersData.length; i++){
+		//separar informacao do vetor de pontos
+		var latlng = new google.maps.LatLng(markersData[i].lat, markersData[i].lng);
+		var classificacao = markersData[i].clf;
+
+		//cria o marcador
+		createMarker(latlng, classificacao);
+
+		// Os valores de latitude e longitude do marcador sao adicionados a variavel bounds
+		bounds.extend(latlng);
+   }
+   // Depois de criados todos os marcadores a API atraves da sua funcao fitBounds vai redefinir o nivel do zoom e consequentemente a area do mapa abrangida.
+   map.fitBounds(bounds);
+}
+
+// Funcao que cria os marcadores e define o conteudo de cada Info Window.
+function createMarker(latlng, clf){
+	var imagem;
+	var classificacao;
+	
+	if (clf == "RE"){
+		imagem = 'img/medio.png';
+		classificacao = "MEDIO";
+	}
+	else if(clf == "PR")
+	{
+		imagem = 'img/ruim.png';
+		classificacao = "RUIM";
+	}
+	else
+	{
+		imagem = 'img/pessimo.png';
+		classificacao = "PÉSSIMO";
+	}
+	
+	var marker = new google.maps.Marker({
+		map: map,
+		position: latlng,
+		title: classificacao,
+		icon: imagem
+	});
+}
+	
 /* Função de inicialização do mapa */
 function initialize() {
 	var latlng = new google.maps.LatLng(-8.055484, -34.951451);  //coordenadas do CIn
@@ -81,6 +133,8 @@ function initialize() {
 	});
 	
 	marker.setPosition(latlng);
+	
+	displayMarkers();
 }
 
 $(document).ready(function () {
